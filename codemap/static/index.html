@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>codemap</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <header class="side-head">
+      <div class="brand" id="brand">codemap</div>
+      <div class="source-row">
+        <select id="ref" title="Which code to show"></select>
+        <label class="live" title="Rebuild whenever the code changes"><input type="checkbox" id="live" checked> live</label>
+        <button id="reload" title="Rebuild the map from the code now">Rebuild</button>
+      </div>
+      <div id="status" class="status"></div>
+    </header>
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search functions, classes, fields" autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+    <nav id="chapters"></nav>
+    <div id="warnings"></div>
+    <div class="legend">
+      <div class="track-only"><i class="sw sw-read"></i><span id="legend-read">reads a field</span></div>
+      <div class="track-only"><i class="sw sw-write"></i><span id="legend-write">writes a field</span></div>
+      <div><i class="sw sw-call"></i>calls</div>
+      <div><i class="sw sw-callin"></i>is called by</div>
+      <div><i class="sw sw-build"></i>builds an object</div>
+      <div class="keys">Keys: <b>j</b>/<b>k</b> or arrows step through the reading order, <b>r</b> marks read, <b>f</b> fits, <b>Esc</b> clears.</div>
+    </div>
+  </aside>
+  <main id="stage">
+    <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow-call" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-call"/></marker>
+        <marker id="arrow-callin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-callin"/></marker>
+        <marker id="arrow-build" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-build"/></marker>
+        <marker id="arrow-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-read"/></marker>
+        <marker id="arrow-write" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-write"/></marker>
+      </defs>
+      <g id="viewport">
+        <g id="bus"></g>
+        <g id="columns"></g>
+        <g id="edges"></g>
+      </g>
+    </svg>
+    <div class="toolbar">
+      <button id="fit" title="Show the whole map (f)">Fit all</button>
+      <button id="calls-toggle" title="Draw every call in the codebase">All calls</button>
+      <span id="zoom-level"></span>
+      <span class="spacer"></span>
+      <button id="detail-toggle" title="Show or hide the panel on the right">Hide panel</button>
+    </div>
+    <div id="error" hidden></div>
+  </main>
+  <section id="detail">
+    <div id="detail-body"></div>
+  </section>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
