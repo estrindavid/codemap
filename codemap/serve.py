@@ -15,7 +15,8 @@ from codemap.build import Options, build_map, fingerprint
 from codemap.source import git, is_git, main_checkout
 
 STATIC = Path(__file__).resolve().parent / "static"
-TYPES = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8"}
+TYPES = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8",
+         ".svg": "image/svg+xml"}
 
 
 class Server:

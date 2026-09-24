@@ -49,7 +49,7 @@ async function loadRefs() {
     const select = $("ref");
     select.innerHTML = "";
     const add = (value, label) => { const option = document.createElement("option"); option.value = value; option.textContent = label; select.appendChild(option); };
-    add("", `Working tree (${data.current})`);
+    add("", data.current ? `Working tree (${data.current})` : "Working tree");
     for (const ref of data.refs) add(ref, ref);
     select.value = S.ref;
   } catch (err) { /* the map still works without the list */ }
@@ -100,10 +100,33 @@ async function loadMap(keep = false) {
     else select({}, { pan: false });
   } else if (S.firstLoad) {
     S.firstLoad = false;
-    focusChapter(S.map.chapters[0]?.id);
-    select({}, { pan: false });
-    renderWelcome();
+    const linked = boxForHash();
+    if (linked) showLinked(linked);
+    else {
+      focusChapter(S.map.chapters[0]?.id);
+      select({}, { pan: false });
+      renderWelcome();
+    }
   }
+}
+
+// A link to a box: the page's address ends in #<its id>, e.g. #records.Graph.node, so a view can be shared or bookmarked.
+function boxForHash() {
+  const key = decodeURI(location.hash.slice(1));
+  return key ? S.boxes.find((b) => b.key === key) || null : null;
+}
+
+// Opens a linked box with the code around it in view: from the map's left edge (the lines' labels included) down to the
+// column after the box's when that fits at a readable size, otherwise with the box a little left of centre.
+function showLinked(box) {
+  const { w, h } = stageSize();
+  const margin = 170;
+  const fit = (w - 20) / (margin + box.x + box.w + COL_GAP + COL_W * 0.9);
+  const k = fit >= 0.5 ? Math.min(0.7, fit) : 0.7;
+  const fromTop = (box.y + Math.min(box.h, 300)) * k + 60 < h;   // below the toolbar
+  S.view = { k, x: fit >= 0.5 ? margin * k : w * 0.42 - (box.x + box.w / 2) * k, y: fromTop ? 50 : h * 0.4 - (box.y + 40) * k };
+  applyView();
+  select({ box: box.id }, { pan: false });
 }
 
 function setStatus(html) { $("status").innerHTML = html; }
@@ -460,6 +483,8 @@ function boxTitle(box) {
 function select(what = {}, opts = {}) {
   if (what.box || what.field || what.recordField) { $("app").classList.remove("no-detail"); $("detail-toggle").textContent = "Hide panel"; }
   S.sel = what.box || null;
+  const key = S.sel ? S.byId.get(S.sel)?.key : null;
+  history.replaceState(null, "", key ? "#" + encodeURI(key) : location.pathname + location.search);
   S.field = what.field || null;
   S.recordField = what.recordField || null;
   if (what.chapter) S.chapter = what.chapter;
@@ -1045,6 +1070,7 @@ async function main() {
   await loadMap(false);
   startPolling();
   window.addEventListener("resize", () => applyView());
+  window.addEventListener("hashchange", () => { const box = boxForHash(); if (box && box.id !== S.sel) select({ box: box.id }); });
 }
 
 main();

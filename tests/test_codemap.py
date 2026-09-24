@@ -77,6 +77,11 @@ def test_a_reexport_resolves_to_the_real_class(shop):
     assert events(shop["symbols"]["shop.loader.load"], "build") == ["shop.models.Item"]
 
 
+def test_calls_outside_the_repo_leave_out_methods_on_local_values(shop):
+    load = shop["symbols"]["shop.loader.load"]
+    assert [e["name"] for e in load["events"] if e["kind"] == "external"] == ["open"]   # not line.strip
+
+
 def test_a_property_read_counts_as_a_call(shop):
     assert "shop.cart.checkout" in shop["symbols"]["shop.cart.Cart.count"]["called_by"]
 

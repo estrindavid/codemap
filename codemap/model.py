@@ -1011,7 +1011,16 @@ class FunctionScan:
                            via=model.symbols[registry].name)
             if built:
                 return
-        self.event("external", node, name=ast.unparse(func)[:60])
+        self.external(node, func, env)
+
+    def external(self, node: ast.Call, func, env: dict) -> None:
+        # A call into code outside the repo, such as json.loads or Path: kept when it starts from an imported or global
+        # name. Method calls on local values (items.append, data.get) and on what another call returned are left out.
+        root = func
+        while isinstance(root, ast.Attribute):
+            root = root.value
+        if isinstance(root, ast.Name) and root.id not in env:
+            self.event("external", node, name=ast.unparse(func)[:60])
 
     def writes_through_copy(self, node: ast.Call, env: dict) -> bool:
         # state.model_copy(update={"x": ...}), replace(state, x=...), evolve(state, x=...), state._replace(x=...): each writes
@@ -1034,7 +1043,7 @@ class FunctionScan:
         for field in fields:
             if self.is_track_field(field):
                 self.event("write", node, field=field)
-        self.event("external", node, name=ast.unparse(func)[:60])
+        self.external(node, func, env)
         return True
 
     def call_arguments(self, node: ast.Call, env: dict) -> None:

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="codemap">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#232c42"/>
+      <stop offset="1" stop-color="#10141c"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g fill="#323a4c">
+    <rect x="18" y="47" width="24" height="12" rx="3.5"/>
+    <rect x="18" y="65" width="24" height="17" rx="3.5"/>
+    <rect x="18" y="88" width="24" height="11" rx="3.5"/>
+    <rect x="52" y="22" width="24" height="12" rx="3.5"/>
+    <rect x="52" y="67" width="24" height="12" rx="3.5"/>
+    <rect x="52" y="85" width="24" height="15" rx="3.5"/>
+    <rect x="86" y="22" width="24" height="16" rx="3.5"/>
+    <rect x="86" y="44" width="24" height="12" rx="3.5"/>
+    <rect x="86" y="89" width="24" height="10" rx="3.5"/>
+  </g>
+  <rect x="18" y="22" width="24" height="18" rx="3.5" fill="#7b96f0"/>
+  <rect x="52" y="40" width="24" height="21" rx="3.5" fill="#a88cf0"/>
+  <rect x="86" y="62" width="24" height="20" rx="3.5" fill="#3cc4bb"/>
+  <path d="M42 31 C49 31 45 50.5 51 50.5 M76 50.5 C83 50.5 79 72 85 72" fill="none" stroke="#eef1f6" stroke-width="2.6"
+        stroke-linecap="round"/>
+</svg>
