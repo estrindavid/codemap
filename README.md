@@ -6,8 +6,8 @@
 
 **Read any Python codebase in the order it runs.**
 
-An interactive map of your code that starts where the program starts and follows every call,<br>
-so you can read it top to bottom like a book. Runs locally, needs nothing but Python.
+An interactive map of your code that starts where the program starts and follows every call, so you can read it top to
+bottom like a book. Runs locally, needs nothing but Python.
 
 [![tests](https://github.com/estrindavid/codemap/actions/workflows/tests.yml/badge.svg)](https://github.com/estrindavid/codemap/actions/workflows/tests.yml)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)
@@ -43,14 +43,18 @@ dropdown shows any git branch.
 
 ## What you get
 
-| | |
-|---|---|
-| 🧭 **A reading order** | Starts at your entry points (the `pyproject.toml` command, `if __name__ == "__main__":`, `main()`, or a library's public API) and walks every call depth first, in the order it runs. |
-| 🔗 **Every connection** | Click a box for its code, the calls it makes (numbered, in order), who calls it, and what it builds, raises and reads. The arrows light up on the map. |
-| 🧵 **The object that flows through** | Finds the object your code passes along, such as a context, a state or a report, and draws each of its fields as a line: where it's written, where it's read. |
-| 🐍 **Real Python, not grep** | Relative imports, re-exports from `__init__.py`, dataclasses, pydantic models, enums, properties, and calls through an abstract base class into every subclass. |
-| ✅ **Progress and notes** | Mark boxes read and keep notes. They live in `~/.codemap`, never in your repo, and follow code that moves to another module. |
-| 🔴 **Live and linkable** | Save a file and the map updates. Look at any branch. Link straight to a box: `http://127.0.0.1:8777/#records.Graph.node`. |
+- 🧭 **A reading order.** It starts at your entry points (the `pyproject.toml` command, `if __name__ == "__main__":`,
+  `main()`, or a library's public API) and walks every call depth first, in the order it runs.
+- 🔗 **Every connection.** Click a box for its code, the calls it makes (numbered, in order), who calls it, and what it
+  builds, raises and reads. The arrows light up on the map.
+- 🧵 **The object that flows through.** It finds the object your code passes along, such as a context, a state or a
+  report, and draws each of its fields as a line: where it's written, where it's read.
+- 🐍 **Real Python, not grep.** Relative imports, re-exports from `__init__.py`, dataclasses, pydantic models, enums,
+  properties, and calls through an abstract base class into every subclass.
+- ✅ **Progress and notes.** Mark boxes read and keep notes. They live in `~/.codemap`, never in your repo, and follow
+  code that moves to another module.
+- 🔴 **Live and linkable.** Save a file and the map updates. Look at any branch. Link straight to a box:
+  `http://127.0.0.1:8777/#records.Graph.node`.
 
 ## It maps itself
 
@@ -85,7 +89,7 @@ know which method each call lands on: annotations, constructors, return types an
 
 ## Keys
 
-| | |
+| Key | Does |
 |---|---|
 | <kbd>j</kbd> <kbd>k</kbd> or arrows | next / previous box in the reading order |
 | <kbd>r</kbd> | mark the current box read |
@@ -95,7 +99,7 @@ know which method each call lands on: annotations, constructors, return types an
 
 ## Options
 
-| | |
+| Option | What it does |
 |---|---|
 | `--port 8777` | where to serve the page |
 | `--only src/app` | map only these folders (repeatable) |
